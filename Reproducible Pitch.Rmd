@@ -1,0 +1,65 @@
+---
+title: "Developing Data Products \nReproducible Pitch"
+author: "Daniel Haile"
+date: "April 30, 2017"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Overview
+
+
+The following Application has been created as an assigment for the Coursera **Developing Data Products** Course. 
+
+The Shiny Application can be found here: https://danhai00.shinyapps.io/ddp_assignment/
+
+The GitHub repository with the relevant code can be found here: https://github.com/3Dan3/Coursera-Developing-Data-Products
+
+
+## GDP per Capita for NAFTA countries
+
+The North American Free Trade Agreement is an agreement signed by Canada, Mexico, and the US.
+
+The Application is designed to enable the user to interactively view how the GDP (Gross Domestic Product) per Capita changed over time in the NAFTA area. An interactive plot for the dataset **gapminder** let the user select up to 3 different countries in the date range: 1952 - 2007.
+
+A slider bar enables the user to access the GDP per Capita data of any of the 3 countries for any interval of years from 1952 to 2007.
+
+## Random sample of processed data
+
+```{r results='hide', message=FALSE, warning=FALSE, echo=FALSE}
+library(shiny)
+library(tidyverse)
+library(plotly)
+library(gapminder)
+```
+```{r}
+data("gapminder")
+gapminder %>%
+  mutate(country = factor(country,
+                          levels = c("Canada", "United States",
+                                     "Mexico"))) %>%
+  filter(country %in% c("Canada", "Mexico","United States")) %>%
+  select(year, country, gdpPercap) %>%
+  sample_n(8)
+```
+
+
+## Interactive Plot of all 3 Countries
+
+```{r}
+gapminder %>%
+  mutate(country = factor(country,
+                          levels = c("Canada", "United States",
+                                     "Mexico"))) %>%
+  filter(country %in% c("Canada", "Mexico","United States")) %>%
+  select(year, country, gdpPercap) %>%
+  plot_ly(x = .$year, y = .$gdpPercap, color = .$country,
+               type = 'scatter', mode = 'lines') %>%
+  layout(title = "GDP per Capita for NAFTA Countries", 
+               yaxis = list(title = "USD"), 
+               xaxis = list(title = "Year"))
+```
+
