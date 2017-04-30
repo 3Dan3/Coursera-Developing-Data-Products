@@ -13,7 +13,7 @@ shinyUI(fluidPage(
       h4("Please select at least 1 Country."),
       checkboxInput("box1", "Show country: US", value = TRUE),
       checkboxInput("box2", "Show country: CAN", value = TRUE),
-      checkboxInput("box3", "Show stock: MEX", value = TRUE)
+      checkboxInput("box3", "Show country: MEX", value = TRUE)
     ),
     
     mainPanel(
